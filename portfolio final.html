@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marcus Limoi — Data Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0D1B2A;
+    --accent: #2DD4BF;
+    --accent-dim: rgba(45,212,191,0.12);
+    --text: #E8EDF2;
+    --muted: #8A9BB0;
+    --border: rgba(255,255,255,0.08);
+    --card-bg: rgba(255,255,255,0.04);
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; background: var(--navy); color: var(--text); line-height: 1.7; font-size: 16px; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 4rem;
+    background: rgba(13,27,42,0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--border);
+  }
+  .nav-logo { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--text); text-decoration: none; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; letter-spacing: 0.03em; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+
+  section { padding: 7rem 4rem; max-width: 1100px; margin: 0 auto; }
+
+  #hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding-top: 8rem; }
+  .hero-eyebrow {
+    font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .hero-eyebrow::before { content: ''; display: block; width: 2rem; height: 1px; background: var(--accent); }
+  h1 { font-family: 'DM Serif Display', serif; font-size: clamp(3rem, 6vw, 5.5rem); line-height: 1.1; font-weight: 400; margin-bottom: 1.5rem; }
+  h1 em { font-style: italic; color: var(--accent); }
+  .hero-sub { font-size: 1.1rem; color: var(--muted); max-width: 560px; margin-bottom: 3rem; line-height: 1.85; }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 4rem; }
+  .btn { display: inline-block; padding: 0.75rem 1.75rem; border-radius: 6px; font-size: 0.9rem; font-weight: 500; text-decoration: none; transition: all 0.2s; letter-spacing: 0.02em; cursor: pointer; }
+  .btn-primary { background: var(--accent); color: var(--navy); border: none; font-family: inherit; }
+  .btn-primary:hover { background: #5eead4; }
+  .btn-ghost { border: 1px solid var(--border); color: var(--text); }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; padding-top: 3rem; border-top: 0.5px solid var(--border); }
+  .stat-number { font-family: 'DM Serif Display', serif; font-size: 2.5rem; color: var(--text); line-height: 1; margin-bottom: 0.25rem; }
+  .stat-number span { color: var(--accent); font-size: 1.5rem; }
+  .stat-label { font-size: 0.8rem; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; }
+
+  .section-label { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+  h2 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; line-height: 1.2; margin-bottom: 2rem; }
+
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .about-body { color: var(--muted); line-height: 1.9; }
+  .about-body p { margin-bottom: 1rem; }
+
+  .tools-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+  .tool-chip { background: var(--card-bg); border: 0.5px solid var(--border); border-radius: 6px; padding: 0.6rem 0.9rem; font-size: 0.82rem; color: var(--text); display: flex; align-items: center; gap: 0.5rem; transition: border-color 0.2s; }
+  .tool-chip:hover { border-color: var(--accent); }
+  .tool-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+  #projects { border-top: 0.5px solid var(--border); }
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+  .project-card { background: var(--card-bg); border: 0.5px solid var(--border); border-radius: 12px; padding: 1.75rem; transition: border-color 0.25s, transform 0.2s; }
+  .project-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .project-tag { display: inline-block; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: var(--accent-dim); border-radius: 4px; padding: 0.25rem 0.6rem; margin-bottom: 1rem; }
+  .project-card h3 { font-size: 1.1rem; font-weight: 500; margin-bottom: 0.75rem; color: var(--text); }
+  .project-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.5rem; }
+  .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .tech-badge { font-size: 0.75rem; color: var(--muted); border: 0.5px solid var(--border); border-radius: 4px; padding: 0.2rem 0.55rem; }
+  .project-links { display: flex; gap: 1rem; margin-top: 1.25rem; }
+  .project-links a { font-size: 0.82rem; color: var(--accent); text-decoration: none; }
+  .project-links a:hover { text-decoration: underline; }
+
+  #experience { border-top: 0.5px solid var(--border); }
+  .exp-list { margin-top: 3rem; }
+  .exp-item { display: grid; grid-template-columns: 180px 1fr; gap: 2rem; padding: 2rem 0; border-bottom: 0.5px solid var(--border); }
+  .exp-item:first-child { padding-top: 0; }
+  .exp-date { font-size: 0.8rem; color: var(--muted); padding-top: 0.2rem; }
+  .exp-role { font-size: 1rem; font-weight: 500; color: var(--text); margin-bottom: 0.15rem; }
+  .exp-company { font-size: 0.85rem; color: var(--accent); margin-bottom: 0.75rem; }
+  .exp-desc { list-style: none; }
+  .exp-desc li { font-size: 0.88rem; color: var(--muted); line-height: 1.8; margin-bottom: 0.4rem; padding-left: 1.1rem; position: relative; }
+  .exp-desc li::before { content: '–'; position: absolute; left: 0; color: var(--accent); }
+
+  #skills { border-top: 0.5px solid var(--border); }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; margin-top: 3rem; }
+  .skill-group h4 { font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+  .skill-list { list-style: none; }
+  .skill-list li { font-size: 0.9rem; color: var(--muted); padding: 0.4rem 0; border-bottom: 0.5px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .skill-bar-wrap { width: 60px; height: 3px; background: var(--border); border-radius: 2px; }
+  .skill-bar { height: 3px; background: var(--accent); border-radius: 2px; }
+
+  #contact { border-top: 0.5px solid var(--border); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .contact-body { color: var(--muted); line-height: 1.9; margin-bottom: 2rem; }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-link { display: flex; align-items: center; gap: 1rem; color: var(--text); text-decoration: none; font-size: 0.95rem; transition: color 0.2s; }
+  .contact-link:hover { color: var(--accent); }
+  .contact-link-icon { width: 40px; height: 40px; border-radius: 8px; background: var(--card-bg); border: 0.5px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 600; flex-shrink: 0; color: var(--accent); }
+
+  .form-group { margin-bottom: 1.25rem; }
+  .form-group label { display: block; font-size: 0.82rem; color: var(--muted); margin-bottom: 0.5rem; }
+  .form-group input, .form-group textarea { width: 100%; background: var(--card-bg); border: 0.5px solid var(--border); border-radius: 8px; padding: 0.8rem 1rem; color: var(--text); font-family: inherit; font-size: 0.9rem; transition: border-color 0.2s; outline: none; resize: vertical; }
+  .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); }
+  .form-group textarea { min-height: 120px; }
+
+  footer { border-top: 0.5px solid var(--border); padding: 2rem 4rem; display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: 0 auto; font-size: 0.82rem; color: var(--muted); }
+  .social-icons { display: flex; gap: 1.25rem; }
+  .social-icons a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .social-icons a:hover { color: var(--accent); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 5rem 1.5rem; }
+    .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .hero-stats { grid-template-columns: repeat(2, 1fr); }
+    .exp-item { grid-template-columns: 1fr; gap: 0.25rem; }
+    footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#hero" class="nav-logo">ML.</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="btn btn-ghost" style="font-size:0.82rem; padding: 0.5rem 1.1rem;">Get in touch</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <p class="hero-eyebrow">Open to opportunities — London, UK</p>
+  <h1>Data analysis,<br><em>clear findings,</em><br>real impact.</h1>
+  <p class="hero-sub">I'm Marcus Limoi, a junior data analyst with a practical portfolio in SQL, Python/Pandas, Power BI, Tableau and Excel — building dashboards and analysis that turn business questions into clear, confident answers.</p>
+  <div class="hero-actions">
+    <a href="#projects" class="btn btn-primary">View my projects</a>
+    <a href="https://github.com/mlimoi" target="_blank" rel="noopener" class="btn btn-ghost">GitHub</a>
+    <a href="https://www.linkedin.com/in/marcus-limoi" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn</a>
+  </div>
+  <div class="hero-stats">
+    <div>
+      <div class="stat-number">5<span>+</span></div>
+      <div class="stat-label">Tools in portfolio</div>
+    </div>
+    <div>
+      <div class="stat-number">L3</div>
+      <div class="stat-label">Data Technician certified</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label">About me</p>
+  <div class="about-grid">
+    <div>
+      <h2>Analytical thinker,<br>practical builder.</h2>
+      <div class="about-body">
+        <p>I'm a junior data analyst based in London with a background in Economics & Business Management — I studied at Aberystwyth University, where I built solid foundations in analytical thinking and evidence-based decision-making.</p>
+        <p>I've since completed Level 2 and Level 3 data technician training, building a hands-on portfolio across SQL, Python, Power BI, Tableau and Excel — from relational database queries to interactive dashboards and statistical analysis.</p>
+        <p>My experience in business intelligence, customer-facing and supervisory roles has sharpened my ability to communicate clearly, work accurately under pressure, and understand what stakeholders actually need from data.</p>
+        <p>Outside of work, I represented my university in competitive gaming tournaments — using teamwork, strategic thinking and performance analysis to improve results. It's a mindset I bring to everything I do.</p>
+      </div>
+    </div>
+    <div>
+      <h3 style="font-size:0.8rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); margin-bottom:1rem;">Tech stack</h3>
+      <div class="tools-grid">
+        <div class="tool-chip"><span class="tool-dot"></span>SQL</div>
+        <div class="tool-chip"><span class="tool-dot"></span>MySQL</div>
+        <div class="tool-chip"><span class="tool-dot"></span>Python</div>
+        <div class="tool-chip"><span class="tool-dot"></span>Pandas</div>
+        <div class="tool-chip"><span class="tool-dot"></span>Power BI</div>
+        <div class="tool-chip"><span class="tool-dot"></span>Power Query</div>
+        <div class="tool-chip"><span class="tool-dot"></span>Tableau</div>
+        <div class="tool-chip"><span class="tool-dot"></span>Excel</div>
+        <div class="tool-chip"><span class="tool-dot"></span>DAX</div>
+        <div class="tool-chip"><span class="tool-dot"></span>Jupyter</div>
+        <div class="tool-chip"><span class="tool-dot"></span>GitHub</div>
+        <div class="tool-chip"><span class="tool-dot"></span>Azure</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-label">Featured projects</p>
+  <h2>Work I've built</h2>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <span class="project-tag">Power BI</span>
+      <h3>Product & Sales Dashboards</h3>
+      <p>Built interactive Power BI dashboards using Power Query for data transformation, defined table relationships, and created KPI visuals, slicers and introductory DAX measures to surface sales and product performance.</p>
+      <div class="project-tech">
+        <span class="tech-badge">Power BI</span>
+        <span class="tech-badge">Power Query</span>
+        <span class="tech-badge">DAX</span>
+        <span class="tech-badge">Data Modelling</span>
+      </div>
+      <div class="project-links">
+        <a href="https://github.com/mlimoi" target="_blank" rel="noopener">GitHub →</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <span class="project-tag">Tableau</span>
+      <h3>Multi-dataset Tableau Dashboards</h3>
+      <p>Developed Tableau dashboards across three real-world datasets — Spotify streaming data, global life expectancy, and GB employment figures — using maps, bar, line and scatter charts to communicate trends visually.</p>
+      <div class="project-tech">
+        <span class="tech-badge">Tableau</span>
+        <span class="tech-badge">Maps</span>
+        <span class="tech-badge">Chart Design</span>
+      </div>
+      <div class="project-links">
+        <a href="https://github.com/mlimoi" target="_blank" rel="noopener">GitHub →</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <span class="project-tag">SQL</span>
+      <h3>Northwind & World Database Analysis</h3>
+      <p>Queried the Northwind and World relational databases in MySQL Workbench using filtering, aggregation, GROUP BY, INNER and LEFT JOINs, and relational schema design to answer real business scenarios.</p>
+      <div class="project-tech">
+        <span class="tech-badge">MySQL Workbench</span>
+        <span class="tech-badge">JOINs</span>
+        <span class="tech-badge">Aggregates</span>
+        <span class="tech-badge">Schema Design</span>
+      </div>
+      <div class="project-links">
+        <a href="https://github.com/mlimoi" target="_blank" rel="noopener">GitHub →</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <span class="project-tag">Excel</span>
+      <h3>Statistical Analysis Workbooks</h3>
+      <p>Built Excel projects covering PivotTables, PivotCharts, slicers, conditional formatting, VLOOKUP/XLOOKUP, correlation analysis, t-tests and descriptive statistics — each tied to a business-style reporting scenario.</p>
+      <div class="project-tech">
+        <span class="tech-badge">Excel</span>
+        <span class="tech-badge">PivotTables</span>
+        <span class="tech-badge">Statistics</span>
+        <span class="tech-badge">XLOOKUP</span>
+      </div>
+      <div class="project-links">
+        <a href="https://github.com/mlimoi" target="_blank" rel="noopener">GitHub →</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <span class="project-tag">Python · Pandas</span>
+      <h3>Python Data Wrangling with Pandas</h3>
+      <p>Used Python and Pandas in Jupyter Notebook to import, inspect, filter, sort, clean and summarise CSV and Excel datasets — practising the full data preparation workflow before analysis.</p>
+      <div class="project-tech">
+        <span class="tech-badge">Python</span>
+        <span class="tech-badge">Pandas</span>
+        <span class="tech-badge">Jupyter</span>
+        <span class="tech-badge">Data Cleaning</span>
+      </div>
+      <div class="project-links">
+        <a href="https://github.com/mlimoi" target="_blank" rel="noopener">GitHub →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <p class="section-label">Background</p>
+  <h2>Where I've worked</h2>
+  <div class="exp-list">
+
+    <div class="exp-item">
+      <div class="exp-date">May 2026 – Present</div>
+      <div>
+        <div class="exp-role">Data Technician Skills Bootcamp</div>
+        <div class="exp-company">Leep Group — Level 3</div>
+        <ul class="exp-desc">
+          <li>Completing practical training across Excel, SQL, Python, Power BI, Tableau and Azure Fundamentals.</li>
+          <li>Developed projects covering data cleaning, database design, data modelling, visualisation, reporting, GDPR and data validation.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">Feb – Apr 2026</div>
+      <div>
+        <div class="exp-role">Digital Skills / Data Technician Training</div>
+        <div class="exp-company">Level 2 Digital Skills Diploma</div>
+        <ul class="exp-desc">
+          <li>Completed practical training in Excel, SQL, databases, workplace IT, digital project work and presentation.</li>
+          <li>Practised PivotTables, charts, conditional formatting, lookup functions, correlations and statistical outputs.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">Feb – Oct 2025</div>
+      <div>
+        <div class="exp-role">Mobility Support Officer</div>
+        <div class="exp-company">Kinect Services — London</div>
+        <ul class="exp-desc">
+          <li>Supported children and young adults with disabilities, maintaining safeguarding standards throughout.</li>
+          <li>Communicated accurately with parents, carers, and transport staff; escalated concerns appropriately.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">Jan 2023 – Oct 2024</div>
+      <div>
+        <div class="exp-role">Floor Supervisor / Bartender</div>
+        <div class="exp-company">The Merchant / Slug and Lettuce</div>
+        <ul class="exp-desc">
+          <li>Oversaw opening, closing, stock management, compliance and customer service in a fast-paced environment.</li>
+          <li>Trained new staff, coordinated team activity during high-volume shifts and resolved customer issues professionally.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">Jun – Aug 2022</div>
+      <div>
+        <div class="exp-role">Business Intelligence Assistant</div>
+        <div class="exp-company">Aberystwyth University — Remote</div>
+        <ul class="exp-desc">
+          <li>Produced competitor and research analysis in Excel, supporting internal reporting and evidence-based decision-making.</li>
+          <li>Updated website content through a CMS and communicated professionally with academics and stakeholders.</li>
+          <li>Coordinated meetings, schedules, and minutes using Microsoft Teams, improving organisation and follow-up.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-date">2018 – 2021</div>
+      <div>
+        <div class="exp-role">Sales Assistant / Admin Assistant / Alumni Caller</div>
+        <div class="exp-company">Various — UK</div>
+        <ul class="exp-desc">
+          <li>Handled stock, cash reconciliation, invoices, correspondence, client documentation and research tasks using Microsoft Office.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label">Expertise</p>
+  <h2>What I bring</h2>
+  <div class="skills-grid">
+    <div class="skill-group">
+      <h4>Data & Analysis</h4>
+      <ul class="skill-list">
+        <li>SQL / JOINs<div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div></li>
+        <li>Excel / PivotTables<div class="skill-bar-wrap"><div class="skill-bar" style="width:88%"></div></div></li>
+        <li>Data cleaning<div class="skill-bar-wrap"><div class="skill-bar" style="width:82%"></div></div></li>
+        <li>Statistics<div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div></li>
+      </ul>
+    </div>
+    <div class="skill-group">
+      <h4>Visualisation</h4>
+      <ul class="skill-list">
+        <li>Power BI<div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div></li>
+        <li>Power Query<div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div></li>
+        <li>Tableau<div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div></li>
+        <li>DAX fundamentals<div class="skill-bar-wrap"><div class="skill-bar" style="width:60%"></div></div></li>
+      </ul>
+    </div>
+    <div class="skill-group">
+      <h4>Programming</h4>
+      <ul class="skill-list">
+        <li>Python<div class="skill-bar-wrap"><div class="skill-bar" style="width:70%"></div></div></li>
+        <li>Pandas<div class="skill-bar-wrap"><div class="skill-bar" style="width:70%"></div></div></li>
+        <li>Jupyter Notebook<div class="skill-bar-wrap"><div class="skill-bar" style="width:72%"></div></div></li>
+        <li>GitHub<div class="skill-bar-wrap"><div class="skill-bar" style="width:68%"></div></div></li>
+      </ul>
+    </div>
+    <div class="skill-group">
+      <h4>Professional</h4>
+      <ul class="skill-list">
+        <li>Communication<div class="skill-bar-wrap"><div class="skill-bar" style="width:92%"></div></div></li>
+        <li>Attention to detail<div class="skill-bar-wrap"><div class="skill-bar" style="width:90%"></div></div></li>
+        <li>Stakeholder reporting<div class="skill-bar-wrap"><div class="skill-bar" style="width:82%"></div></div></li>
+        <li>Problem-solving<div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label">Get in touch</p>
+  <div class="contact-grid">
+    <div>
+      <h2>Let's talk data<br>and opportunities.</h2>
+      <p class="contact-body">I'm actively looking for my first junior data analyst role. If you have a position, a project, or just want to connect with someone who takes data seriously — I'd love to hear from you.</p>
+      <div class="contact-links">
+        <a href="mailto:marcuslimoi@hotmail.com" class="contact-link">
+          <div class="contact-link-icon">✉</div>
+          marcuslimoi@hotmail.com
+        </a>
+        <a href="https://www.linkedin.com/in/marcus-limoi" target="_blank" rel="noopener" class="contact-link">
+          <div class="contact-link-icon">in</div>
+          linkedin.com/in/marcus-limoi
+        </a>
+        <a href="https://github.com/mlimoi" target="_blank" rel="noopener" class="contact-link">
+          <div class="contact-link-icon">GH</div>
+          github.com/mlimoi
+        </a>
+      </div>
+    </div>
+    <div>
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" placeholder="Your name">
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="you@example.com">
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea placeholder="Tell me about the role or project…"></textarea>
+      </div>
+      <button class="btn btn-primary" style="width:100%;">Send message</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Marcus Limoi</span>
+  <div class="social-icons">
+    <a href="https://github.com/mlimoi" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://www.linkedin.com/in/marcus-limoi" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="mailto:marcuslimoi@hotmail.com">Email</a>
+  </div>
+</footer>
+
+</body>
+</html>
